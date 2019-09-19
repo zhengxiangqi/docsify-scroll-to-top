@@ -1,6 +1,6 @@
 {
   "name": "docsify-scroll-to-top",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "docsify scroll to top plugin",
   "main": "dist/docsify-scroll-to-top.min.js",
   "directories": {

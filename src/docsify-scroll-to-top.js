@@ -47,23 +47,25 @@ var install = function (hook, vm) {
     });
 
     hook.doneEach(function() {
-        window.removeEventListener('scroll', onScroll);
-        window.addEventListener('scroll', onScroll);
         var $scrollBtn = Docsify.dom.find('span.scroll-to-top');
-        Docsify.dom.on(
-            $scrollBtn,
-            'click',
-            function (e) {
-                e.stopPropagation();
-                Docsify.dom.body.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        );
-        Docsify.dom.findAll('h1,h2,h3,h4,h5,h6,h7,h8,h9').forEach(function (node) {
-            node.style.position = 'relative';
-        });
+        if ($scrollBtn) {
+            window.removeEventListener('scroll', onScroll);
+            window.addEventListener('scroll', onScroll);
+            Docsify.dom.on(
+                $scrollBtn,
+                'click',
+                function (e) {
+                    e.stopPropagation();
+                    Docsify.dom.body.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            );
+            Docsify.dom.findAll('h1,h2,h3,h4,h5,h6,h7,h8,h9').forEach(function (node) {
+                node.style.position = 'relative';
+            });
+        }
     });
 };
 
