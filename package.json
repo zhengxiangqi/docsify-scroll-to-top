@@ -1,0 +1,29 @@
+{
+  "name": "docsify-scroll-to-top",
+  "version": "1.0.0",
+  "description": "docsify scroll to top plugin",
+  "main": "dist/docsify-scroll-to-top.min.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhengxiangqi/docsify-scroll-to-top.git"
+  },
+  "keywords": [
+    "docsify",
+    "scroll",
+    "to",
+    "top",
+    "plugin"
+  ],
+  "author": "zhengxiangqi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhengxiangqi/docsify-scroll-to-top/issues"
+  },
+  "homepage": "https://github.com/zhengxiangqi/docsify-scroll-to-top#readme"
+}
