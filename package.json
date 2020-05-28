@@ -1,12 +1,13 @@
 {
   "name": "docsify-scroll-to-top",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "docsify scroll to top plugin",
   "main": "dist/docsify-scroll-to-top.min.js",
   "directories": {
     "example": "example"
   },
   "scripts": {
+    "build": "npx uglify-js src/docsify-scroll-to-top.js -o dist/docsify-scroll-to-top.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

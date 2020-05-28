@@ -14,25 +14,6 @@ var install = function (hook, vm) {
     CONFIG.bottom = opts.bottom && typeof opts.bottom === 'number' ? opts.bottom : CONFIG.bottom;
     CONFIG.offset = opts.offset && typeof opts.offset === 'number' ? opts.offset : CONFIG.offset;
 
-    var scrollBtn = '<span class="scroll-to-top" style="' +
-                    'display: ' + (CONFIG.auto ? 'none' : 'block') + ';' +
-                    'overflow: hidden;' +
-                    'position: fixed;' +
-                    'right: ' + CONFIG.right + 'px;' +
-                    'bottom: ' + CONFIG.bottom + 'px;' +
-                    'width: 50px;' +
-                    'height: 50px;' +
-                    'background: white;' +
-                    'color: #666;' +
-                    'border: 1px solid #ddd;' +
-                    'border-radius: 4px;' +
-                    'line-height: 42px;' +
-                    'font-size: 16px;' +
-                    'text-align: center;' +
-                    'box-shadow: 0px 0px 6px #eee;' +
-                    'cursor: pointer;' +
-                    '">' + CONFIG.text + '</span>';
-
     var onScroll = function(e) {
         if (!CONFIG.auto) {
             return;
@@ -42,30 +23,40 @@ var install = function (hook, vm) {
         $scrollBtn.style.display = offset >= CONFIG.offset ? "block" : "none";
     };
 
-    hook.afterEach(function(html, next) {
-        next(html + scrollBtn);
-    });
-
-    hook.doneEach(function() {
-        var $scrollBtn = Docsify.dom.find('span.scroll-to-top');
-        if ($scrollBtn) {
-            window.removeEventListener('scroll', onScroll);
-            window.addEventListener('scroll', onScroll);
-            Docsify.dom.on(
-                $scrollBtn,
-                'click',
-                function (e) {
-                    e.stopPropagation();
-                    Docsify.dom.body.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+    hook.mounted(function() {
+        var scrollBtn = document.createElement('span');
+        scrollBtn.className = 'scroll-to-top';
+        scrollBtn.style.display = CONFIG.auto ? 'none' : 'block';
+        scrollBtn.style.overflow = 'hidden';
+        scrollBtn.style.position = 'fixed';
+        scrollBtn.style.right = CONFIG.right + 'px';
+        scrollBtn.style.bottom = CONFIG.bottom + 'px';
+        scrollBtn.style.width = '50px';
+        scrollBtn.style.height = '50px';
+        scrollBtn.style.background = 'white';
+        scrollBtn.style.color = '#666';
+        scrollBtn.style.border = '1px solid #ddd';
+        scrollBtn.style.borderRadius = '4px';
+        scrollBtn.style.lineHeight = '42px';
+        scrollBtn.style.fontSize = '16px';
+        scrollBtn.style.textAlign = 'center';
+        scrollBtn.style.boxShadow = '0px 0px 6px #eee';
+        scrollBtn.style.cursor = 'pointer';
+        var textNode = document.createTextNode(CONFIG.text);
+        scrollBtn.appendChild(textNode);
+        document.body.appendChild(scrollBtn);
+        window.addEventListener('scroll', onScroll);
+        scrollBtn.onclick = function (e) {
+            e.stopPropagation();
+            var step = window.scrollY / 15;
+            var scroll = function() {
+                window.scrollTo(0, window.scrollY - step);
+                if(window.scrollY > 0) {
+                    setTimeout(scroll, 15);
                 }
-            );
-            Docsify.dom.findAll('h1,h2,h3,h4,h5,h6,h7,h8,h9').forEach(function (node) {
-                node.style.position = 'relative';
-            });
-        }
+            };
+            scroll();
+        };
     });
 };
 
